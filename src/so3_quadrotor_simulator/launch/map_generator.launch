@@ -1,0 +1,52 @@
+<launch>
+  <!-- size of map, change the size inflate x, y, z according to your application -->
+  <arg name="map_size_x" value="40.0"/>
+  <arg name="map_size_y" value="40.0"/>
+  <arg name="map_size_z" value=" 3.0"/>
+
+  <!-- topic of your odometry such as VIO or LIO -->
+  <arg name="odom_topic" value="/visual_slam/odom" />
+
+
+  <arg name="init_x" value="-18.0"/>
+  <arg name="init_y" value="0.0"/>
+  <arg name="init_z" value="0.0"/> 
+  <arg name="obj_num" value="1" />
+
+
+  <!-- There are two kinds of maps you can choose, just comment out the one you don’t need like the follow. Have a try. /-->
+
+  <node pkg ="map_generator" name ="random_forest" type ="random_forest" output = "screen">    
+    <remap from="~odometry"   to="$(arg odom_topic)"/>    
+    <param name="init_state_x"   value="0.0)"/>
+    <param name="init_state_y"   value="0.0"/>
+    <param name="map/x_size"     value="$(arg map_size_x)" />
+    <param name="map/y_size"     value="$(arg map_size_y)" />
+    <param name="map/z_size"     value="$(arg map_size_z)" />
+    <param name="map/resolution" value="0.1"/>        
+
+    <param name="ObstacleShape/seed" value="1"/>
+    <param name="map/obs_num"    value="10"/>
+    <param name="ObstacleShape/lower_rad" value="0.5"/>
+    <param name="ObstacleShape/upper_rad" value="0.7"/>
+    <param name="ObstacleShape/lower_hei" value="0.0"/>
+    <param name="ObstacleShape/upper_hei" value="3.0"/>        
+
+    <param name="map/circle_num" value="10"/>        
+    <param name="ObstacleShape/radius_l" value="0.7"/>        
+    <param name="ObstacleShape/radius_h" value="0.5"/>        
+    <param name="ObstacleShape/z_l" value="0.7"/>        
+    <param name="ObstacleShape/z_h" value="0.8"/>        
+    <param name="ObstacleShape/theta" value="0.5"/>        
+
+    <param name="sensing/radius" value="5.0"/>        
+    <param name="sensing/rate"   value="10.0"/>  
+    
+    <param name="min_distance" value="0.5"/>         
+  </node>
+
+
+   <node name="rviz" pkg="rviz" type="rviz"
+      args="-d $(find so3_quadrotor_simulator)/config/default.rviz"
+      />
+  </launch>

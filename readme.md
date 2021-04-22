@@ -1,5 +1,13 @@
 ## uav_simulator
 
+## 安装
+
+git clone xxx
+cd uav_simulator
+catkin_make
+./all.sh
+
+## 说明
 map_generator
 
 - 订阅无人机的里程计（用于推断局部点云）
